@@ -15,7 +15,6 @@
         "livewire/volt": "^1.6"
     },
     "require-dev": {
-        "aaronfrancis/solo": "^0.2.2",
         "barryvdh/laravel-ide-helper": "^3.3",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.1",
