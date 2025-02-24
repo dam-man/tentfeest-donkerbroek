@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Changa:wght@700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-accent: var(--color-zinc-700);
+        --color-accent-content: var(--color-zinc-500);
+        --color-accent-foreground: var(--color-white);
+    }
+
+    .dark {
+        --color-accent: var(--color-zinc-700);
+        --color-accent-content: var(--color-zinc-500);
+        --color-accent-foreground: var(--color-white);
+    }
+}
+
+@layer base {
+
+    input:focus {
+        @apply outline-none;
+    }
+
+    .font-family-changa{
+        font-family: 'Changa', sans-serif;
+    }
+
+    .text-pink{
+        color: #e6007e;
+    }
+
+    .text-blue{
+        color: #0710db;
+    }
+
+    .bg-pink{
+        background-color: #e6007e;
+    }
+
+    .bg-blue{
+        background-color: #0710db;
+    }
+}
