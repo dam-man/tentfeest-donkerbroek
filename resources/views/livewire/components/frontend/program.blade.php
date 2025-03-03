@@ -38,8 +38,9 @@ new class extends Component {
 			<div class="w-full md:w-1/2 p-1">
 				<div class="relative flex justify-center items-center h-full p-3 md:p-3">
 					<div class="relative">
+{{--						{{ asset('storage/tickets/'.$event->image) }}--}}
 						<img
-								src="{{ asset('storage/tickets/'.$event->image) }}"
+								src="{{ Storage::url('tickets/'.$event->image) }}"
 								class="w-full rounded-t-xl rounded-2xl {{$loop->iteration % 2 == 0 ? 'mt-6' : ''}}"
 								alt="Rene Kars op tentfeest Donkerbroek"
 						/>
