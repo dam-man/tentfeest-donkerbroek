@@ -95,6 +95,7 @@ new #[Layout('layouts.admin')] class extends Component {
 				                   ->orWhere('email', 'LIKE', '%' . $search . '%');
 			             });
 		             })
+		             ->orderBy('id')
 		             ->withTrashed()
 		             ->paginate(15);
 
