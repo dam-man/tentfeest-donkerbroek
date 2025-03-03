@@ -31,7 +31,7 @@ new class extends Component {
 				variant: 'success',
 			);
 
-			$this->redirect(route('users.index'), navigate: true);
+			$this->redirect(route('administrator.users.index'), navigate: true);
 		}
 	}
 
@@ -45,7 +45,7 @@ new class extends Component {
 				variant: 'success',
 			);
 
-			$this->redirect(route('users.index'), navigate: true);
+			$this->redirect(route('administrator.users.index'), navigate: true);
 		}
 	}
 
