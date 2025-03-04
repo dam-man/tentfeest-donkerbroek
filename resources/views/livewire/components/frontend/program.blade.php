@@ -36,11 +36,11 @@ new class extends Component {
 
 		@foreach($events as $event)
 			<div class="w-full md:w-1/2 p-1">
-				{{Storage::disk('public')->url('tickets/'.$event->image)}}
+
 				<div class="relative flex justify-center items-center h-full p-3 md:p-3">
 					<div class="relative">
 						<img
-								src="{{ asset('storage/tickets/'.$event->image) }}"
+								src="{{Storage::disk('public')->url('public/tickets/'.$event->image)}}"
 								class="w-full rounded-t-xl rounded-2xl {{$loop->iteration % 2 == 0 ? 'mt-6' : ''}}"
 								alt="{{$event->description}} op tentfeest Donkerbroek"
 						/>
