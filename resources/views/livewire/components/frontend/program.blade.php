@@ -40,7 +40,7 @@ new class extends Component {
 				<div class="relative flex justify-center items-center h-full p-3 md:p-3">
 					<div class="relative">
 						<img
-								src="{{Storage::disk('public')->url('public/tickets/'.$event->image)}}"
+								src="{{Storage::url('public/tickets/'.$event->image)}}"
 								class="w-full rounded-t-xl rounded-2xl {{$loop->iteration % 2 == 0 ? 'mt-6' : ''}}"
 								alt="{{$event->description}} op tentfeest Donkerbroek"
 						/>
