@@ -75,6 +75,8 @@ new #[Layout('layouts.frontend')] class extends Component {
 		@foreach($events as $event)
 			<livewire:components.frontend.order-event :event="$event" :key="$event->id"/>
 		@endforeach
+
 		<livewire:components.frontend.shoppingcart/>
+
 	</div>
 </div>

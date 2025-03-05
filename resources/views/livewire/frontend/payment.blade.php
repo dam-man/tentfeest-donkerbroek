@@ -31,87 +31,77 @@ new #[Layout('layouts.frontend')] class extends Component {
 			align="center"
 	/>
 
-
-	<div class="flex flex-wrap mt-1 mb-10 md:mb-0 md:mt-8">
-		<div class="w-full md:w-1/3 p-1">
-			<flux:card class="space-y-6">
-				<div>
-					<flux:heading size="lg">Inloggen of Registreren?</flux:heading>
-				</div>
-
-				<div x-data="{ expanded: false }" class="space-y-6">
-
-					<flux:tabs variant="segmented" class="w-full">
-						<flux:tab x-on:click="expanded = ! expanded" icon="lock-closed" :accent="false">Inloggen</flux:tab>
-						<flux:tab x-on:click="expanded = ! expanded" icon="user-plus" :accent="false">Registreren</flux:tab>
-					</flux:tabs>
-
-					<div x-show="expanded">
-
-						<div class="space-y-6">
-							<flux:input label="Naam" type="name" class="frontend"/>
-							<flux:input label="Email" type="email" class="frontend"/>
-							<flux:input label="Wachtwoord" type="email" class="frontend"/>
-							<flux:input label="Herhaal Wachtwoord" type="email" class="frontend"/>
-						</div>
-
-						<div class="space-y-2">
-							<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-								Registreer Account
-							</flux:button>
-						</div>
-
-					</div>
-
-					<!-- Show login Form -->
-					<div x-show="!expanded">
-
-						<flux:input label="Email" type="email" class="frontend"/>
-
-						<flux:field>
-							<div class="mb-3 flex justify-between">
-								<flux:label>Password</flux:label>
-								<flux:link href="#" variant="subtle" class="text-xs pt-1">Wachtwoord Vergeten?</flux:link>
+	<div class="flex items-center justify-center">
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-3/4">
+			<div>
+				<div class="rounded-lg h-full bg-blue font-family-changa space-y-4">
+					<div class="p-6 text-center">
+						<h3 class="text-3xl">
+							<div class="text-pink font-bold  uppercase">
+								Heb jij een account?
 							</div>
-							<flux:input type="password" class="frontend"/>
-							<flux:error name="password"/>
-						</flux:field>
+							<div class="uppercase text-white text-lg">
+								<strong>Inloggen of Registreren</strong>
+							</div>
+						</h3>
+					</div>
 
-						<div class="space-y-2">
-							<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-								Inloggen
-							</flux:button>
+					<div x-data="{ register: false }" class="space-y-4 p-6 pt-0">
+
+						<flux:tabs variant="segmented" class="w-full">
+							<flux:tab x-on:click="register = ! register" icon="lock-closed" :accent="false">Inloggen</flux:tab>
+							<flux:tab x-on:click="register = ! register" icon="user-plus" :accent="false">Registreren</flux:tab>
+						</flux:tabs>
+
+						<!-- Show Register Form -->
+						<div x-show="register">
+
+							<div class="space-y-4">
+								<flux:input label="Naam" type="name" class="frontend"/>
+								<flux:input label="Email" type="email" class="frontend"/>
+								<flux:input label="Wachtwoord" type="email" class="frontend"/>
+								<flux:input label="Herhaal Wachtwoord" type="email" class="frontend"/>
+							</div>
+
+							<div class="mt-4">
+								<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
+									REGISTREER GRATIS ACCOUNT
+								</flux:button>
+							</div>
+
+						</div>
+
+						<div x-show="!register" class="space-y-4">
+
+							<flux:input label="Email" type="email" class="frontend"/>
+
+							<flux:field>
+
+								<div class="mb-3 flex justify-between">
+									<flux:label>Password</flux:label>
+									<flux:link href="#" variant="subtle" class="text-xs pt-1">Wachtwoord Vergeten?</flux:link>
+								</div>
+
+								<flux:input type="password" class="frontend"/>
+								<flux:error name="password"/>
+							</flux:field>
+
+							<div class="mt-6">
+								<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
+									Inloggen
+								</flux:button>
+							</div>
+
 						</div>
 
 					</div>
 
 				</div>
-
-			</flux:card>
-		</div>
-		<div class="w-full md:w-1/3 p-1">
-			<flux:card class="space-y-6">
-				<div>
-					<flux:heading size="lg">Ik ben nieuw hier!</flux:heading>
-					<flux:subheading>Maak een account aan, en voltooi je bestelling!</flux:subheading>
-				</div>
-
-				<div class="space-y-6">
-					<flux:input label="Naam" type="name" class="frontend"/>
-					<flux:input label="Email" type="email" class="frontend"/>
-					<flux:input label="Wachtwoord" type="email" class="frontend"/>
-					<flux:input label="Herhaal Wachtwoord" type="email" class="frontend"/>
-				</div>
-
-				<div class="space-y-2">
-					<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-						Registreer Account
-					</flux:button>
-				</div>
-			</flux:card>
-		</div>
-		<div class="w-full md:w-1/3 p-1">
-			Shopping Card
+			</div>
+			<div class=" h-full">
+				<livewire:components.frontend.shoppingcart/>
+			</div>
 		</div>
 	</div>
+
 </div>
