@@ -60,7 +60,7 @@ return [
 
 		'public' => [
 			'driver'     => 'local',
-			'root'       => storage_path('app/public'),
+			'root'       => storage_path('app'),
 			'url'        => env('APP_URL') . '/storage',
 			'visibility' => 'public',
 			'throw'      => false,
@@ -87,11 +87,11 @@ return [
 		],
 
 		'vultr' => [
-			'driver' => 's3',
-			'key'=> env('VULTR_ACCESS_KEY'),
-			'secret' => env('VULTR_SECRET_KEY'),
-			'region' => env('VULTR_REGION'),
-			'bucket' => env('VULTR_BUCKET'),
+			'driver'   => 's3',
+			'key'      => env('VULTR_ACCESS_KEY'),
+			'secret'   => env('VULTR_SECRET_KEY'),
+			'region'   => env('VULTR_REGION'),
+			'bucket'   => env('VULTR_BUCKET'),
 			'endpoint' => env('VULTR_ENDPOINT'),
 		],
 
