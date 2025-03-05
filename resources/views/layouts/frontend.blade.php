@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="light" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +39,7 @@
 
 	<flux:button wire:navigate="{{route('order')}}" variant="primary" size="sm"
 				 class="!bg-pink font-family-changa mt-2 md:mt-0 z-50">
-		Ik wil kaarten Bestellen!
+		Ik wil kaarten Bestellen!!
 	</flux:button>
 
 </flux:header>

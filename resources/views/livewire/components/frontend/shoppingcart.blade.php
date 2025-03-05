@@ -166,7 +166,7 @@ new class extends Component {
 			<flux:button wire:click="applyCoupon" variant="primary" size="sm" class="!bg-pink w-full mt-4">
 				Korting Toepassen
 			</flux:button>
-			<flux:button type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8">
+			<flux:button href="{{route('payment')}}" type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8">
 				AFREKENEN
 			</flux:button>
 

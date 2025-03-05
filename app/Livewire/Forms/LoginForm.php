@@ -33,13 +33,6 @@ class LoginForm extends Form
 
 		$user = User::query()->where('email', $this->email)->first();
 
-		if($user && $user->status_id === 11)
-		{
-			throw ValidationException::withMessages([
-				'form.email' => 'Gebruikersnaam/wachtwoord incorrect',
-			]);
-		}
-
 		if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
 			RateLimiter::hit($this->throttleKey());
 
@@ -56,6 +49,7 @@ class LoginForm extends Form
 
 	/**
 	 * Ensure the authentication request is not rate limited.
+	 * @throws ValidationException
 	 */
 	protected function ensureIsNotRateLimited(): void
 	{

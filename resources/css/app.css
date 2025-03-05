@@ -6,14 +6,14 @@
 
 @layer base {
     :root {
-        --color-accent: var(--color-zinc-700);
-        --color-accent-content: var(--color-zinc-500);
+        --color-accent:            var(--color-zinc-700);
+        --color-accent-content:    var(--color-zinc-500);
         --color-accent-foreground: var(--color-white);
     }
 
     .dark {
-        --color-accent: var(--color-zinc-700);
-        --color-accent-content: var(--color-zinc-500);
+        --color-accent:            var(--color-zinc-700);
+        --color-accent-content:    var(--color-zinc-500);
         --color-accent-foreground: var(--color-white);
     }
 }
@@ -24,23 +24,31 @@
         @apply outline-none;
     }
 
-    .font-family-changa{
+    .frontend input {
+        @apply border border-gray-300;
+    }
+
+    .font-family-changa {
         font-family: 'Changa', sans-serif;
     }
 
-    .text-pink{
+    .text-pink {
         color: #e6007e;
     }
 
-    .text-blue{
+    .text-blue {
         color: #0710db;
     }
 
-    .bg-pink{
+    .bg-pink {
         background-color: #e6007e;
     }
 
-    .bg-blue{
+    .bg-blue {
         background-color: #0710db;
+    }
+
+    .bg-success {
+        background-color: #166534;
     }
 }
