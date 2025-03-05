@@ -47,7 +47,7 @@ new class extends Component {
 					</div>
 				</div>
 
-				<img src="{{Storage::url('articles/' . $article->image)}}" style="height: 225px;" alt="{{$article->title}}">
+				<img src="{{Storage::url('public/articles/' . $article->image)}}" style="height: 225px;" alt="{{$article->title}}">
 				<div class="pl-5 pr-5 pb-5">
 					<div class="text-sm text-gray-200 pb-3 font-family-changa">Geschreven op {{\Carbon\Carbon::parse($article->publish_at)->format('d-m-Y')}}</div>
 					<h3 class="text-2xl text-white font-family-changa">{{$article->title}}</h3>
