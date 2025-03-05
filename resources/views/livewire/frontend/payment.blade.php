@@ -34,11 +34,12 @@ new #[Layout('layouts.frontend')] class extends Component {
 	<div class="flex items-center justify-center">
 		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-3/4">
 			<div>
+
 				<div class="rounded-lg h-full bg-blue font-family-changa space-y-4">
 					<div class="p-6 text-center">
 						<h3 class="text-3xl">
 							<div class="text-pink font-bold  uppercase">
-								Heb jij een account?
+								Jouw Account
 							</div>
 							<div class="uppercase text-white text-lg">
 								<strong>Inloggen of Registreren</strong>
@@ -88,7 +89,7 @@ new #[Layout('layouts.frontend')] class extends Component {
 
 							<div class="mt-6">
 								<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-									Inloggen
+									INLOGGEN
 								</flux:button>
 							</div>
 
@@ -99,7 +100,7 @@ new #[Layout('layouts.frontend')] class extends Component {
 				</div>
 			</div>
 			<div class=" h-full">
-				<livewire:components.frontend.shoppingcart/>
+				<livewire:components.frontend.shoppingcart page="payment"/>
 			</div>
 		</div>
 	</div>

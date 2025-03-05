@@ -9,6 +9,7 @@ new class extends Component {
 
 	use HasShoppingCartSession;
 
+	public string $page = 'shoppingcart';
 	public string $coupon = '';
 
 	public function removeFromCart($id): void
@@ -97,10 +98,10 @@ new class extends Component {
 	<div class="p-6 text-center">
 		<h3 class="text-3xl">
 			<div class="text-pink font-bold  uppercase">
-				Winkelwagen
+				 {{$page == 'shoppingcart' ? 'Winkelwagen' : 'Betalen'}}
 			</div>
 			<div class="uppercase text-white  text-lg">
-				<strong>Afrekenen</strong>
+				<strong>{{$page == 'shoppingcart' ? 'Jouw bestelling' : 'Betaal  eenvoudig Met IDEAL'}}</strong>
 			</div>
 		</h3>
 	</div>
@@ -129,7 +130,9 @@ new class extends Component {
 					@foreach($items as $order)
 						<flux:row>
 							<flux:cell>
-								<flux:icon.x-circle wire:click="removeFromCart({{$order['id']}})" variant="mini" class="float-right cursor-pointer"/>
+								@if($page === 'shoppingcart')
+									<flux:icon.x-circle wire:click="removeFromCart({{$order['id']}})" variant="mini" class="float-right cursor-pointer"/>
+								@endif
 								@if($order['type'] == 'munten')
 									{{$order['quantity'] * 10}} Munten
 								@else
@@ -162,8 +165,9 @@ new class extends Component {
 				</flux:rows>
 			</flux:table>
 
-			<flux:input wire:model="coupon" size="sm" placeholder="Voer kortingscode in.." class="mt-8"/>
-			<flux:button wire:click="applyCoupon" variant="primary" size="sm" class="!bg-pink w-full mt-4">
+			<flux:input wire:model="coupon" placeholder="Voer kortingscode in.." class="mt-8"/>
+
+			<flux:button wire:click="applyCoupon" variant="primary" class="!bg-pink w-full mt-4">
 				Korting Toepassen
 			</flux:button>
 			<flux:button href="{{route('payment')}}" type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8">
