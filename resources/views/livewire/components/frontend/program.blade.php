@@ -52,7 +52,7 @@ new class extends Component {
 								JULI
 							</div>
 						</div>
-						<div class="absolute top-0 text-center transform origin-center text-3xl font-semibold font-family-changa text-white bg-pink p-4 w-full rounded-t-xl">
+						<div class="absolute top-0 text-center transform origin-center text-xl md:text-3xl font-semibold font-family-changa text-white bg-pink p-3 md:p-4 w-full rounded-t-xl">
 							{{strtoupper($event->description)}}
 						</div>
 					</div>
