@@ -44,11 +44,11 @@ new class extends Component {
 								class="w-full rounded-t-xl rounded-2xl {{$loop->iteration % 2 == 0 ? 'mt-6' : ''}}"
 								alt="{{$event->description}} op tentfeest Donkerbroek"
 						/>
-						<div class="absolute -bottom-2 {{$loop->iteration % 2 == 0 ? '-left-2' : '-right-2'}} text-center bg-blue w-24 h-24 rounded-xl">
-							<div class="pt-3 text-4xl text-white font-semibold font-family-changa">
+						<div class="absolute -bottom-2 {{$loop->iteration % 2 == 0 ? '-left-2' : '-right-2'}} text-center bg-blue w-20 h-20 rounded-xl">
+							<div class="pt-3 text-3xl text-white font-semibold font-family-changa">
 								{{Carbon::parse($event->date)->format('d')}}
 							</div>
-							<div class="text-4xl -mt-2 text-white font-semibold font-family-changa">
+							<div class="text-3xl -mt-2 text-white font-semibold font-family-changa">
 								JULI
 							</div>
 						</div>
@@ -61,7 +61,7 @@ new class extends Component {
 		@endforeach
 	</div>
 
-	<div class="hidden md:block text-center text-4xl text-white font-semibold font-family-changa mb-10">
+	<div class="hidden md:block text-center text-3xl text-white font-semibold font-family-changa mb-10">
 		21:00 UUR
 	</div>
 
