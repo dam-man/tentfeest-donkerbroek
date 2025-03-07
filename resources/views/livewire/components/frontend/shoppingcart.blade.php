@@ -1,13 +1,15 @@
 <?php
 
 use App\Models\Coupon;
+use App\Service\MolliePaymentService;
+use App\Traits\HasOrder;
 use App\Traits\HasShoppingCartSession;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
 new class extends Component {
 
-	use HasShoppingCartSession;
+	use HasOrder, HasShoppingCartSession;
 
 	public string $page       = 'shoppingcart';
 	public string $coupon     = '';
@@ -62,10 +64,12 @@ new class extends Component {
 		else
 		{
 			Flux::toast(
-				text: 'Deze kortingscode is niet meer geldig.',
-				heading: 'Oeps',
-				variant: 'error',
+				text: 'Deze kortingscode is niet (meer) geldig.',
+				heading: 'Helaas',
+				variant: 'danger',
 			);
+
+			return false;
 		}
 
 		$this->coupon = '';
@@ -79,6 +83,60 @@ new class extends Component {
 		);
 
 		return true;
+	}
+
+	public function startPayment()
+	{
+		if ( ! $this->hasCartItems() || ! auth()->check())
+		{
+			Flux::toast(
+				text: 'Je bent niet ingelogd of er zitten geen producten in je winkelwagen.',
+				heading: 'Er is iets mis gegaan.',
+				variant: 'danger',
+			);
+
+			return false;
+		}
+
+		// Check if we could save the order
+		if ($order = $this->storeOrderDetails())
+		{
+			// Check if a coupon is applied
+			$couponId = $order->coupon_id;
+
+			// Generate Tickets..
+
+			if ($this->cartTotal(true) > 0)
+			{
+				// Instantiate payment provider.
+				$payment = new MolliePaymentService();
+
+				// Getting the payment URL for this order.
+				$paymentUrl = $payment->getPaymentUrl($order);
+
+				// Redirect to the payment URL.
+				return redirect()->away($paymentUrl);
+			}
+
+			if ($couponId)
+			{
+				Coupon::whereId($couponId)->increment('usage');
+			}
+
+			$order->status = 'paid';
+			$order->save();
+
+			// Clearing cart contents
+			$this->clearCart();
+
+			Flux::toast(
+				text: 'De tickets worden binnen enkele minuten naar je e-mailadres gestuurd.',
+				heading: 'Yes!',
+				variant: 'success',
+			);
+
+			return $this->redirect(route('order'), navigate: true);
+		}
 	}
 
 	#[On('updateShoppingCart')]
@@ -178,7 +236,7 @@ new class extends Component {
 			</flux:button>
 			@if($page === 'shoppingcart')
 				@if($isLoggedIn)
-					<flux:button type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+					<flux:button wire:click="startPayment" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
 						IDEAL Betaling Voltooien
 					</flux:button>
 				@else
@@ -188,11 +246,11 @@ new class extends Component {
 				@endif
 			@else
 				@if($isLoggedIn)
-					<flux:button type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+					<flux:button wire:click="startPayment" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
 						IDEAL Betaling Voltooien
 					</flux:button>
 				@else
-					<flux:button type="submit" disabled variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+					<flux:button disabled variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
 						IDEAL Betaling Voltooien
 					</flux:button>
 				@endif

@@ -28,6 +28,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 	Volt::route('administrator/tickets', 'administrator.events.index')->name('administrator.events.index');
 
 	Route::fallback(function () {
-		return response()->redirectTo(route('administrator.not.found.page'));
+		return response()->redirectTo(route('administrator.orders.index'));
 	});
 });

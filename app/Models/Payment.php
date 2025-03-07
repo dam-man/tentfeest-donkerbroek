@@ -19,14 +19,6 @@ class Payment extends Model
         'updated_at',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'created_at' => 'datetime',
-            'status'     => PaymentStatusEnum::class,
-        ];
-    }
-
     public function order(): HasOne
     {
         return $this->hasOne(Order::class, 'id','order_id')->with('user');
