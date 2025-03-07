@@ -22,6 +22,15 @@ class LoginForm extends Form
 	#[Validate('boolean')]
 	public bool $remember = false;
 
+	public function messages(): array
+	{
+		return [
+			'email.required'    => 'Voer een email adres is.',
+			'email.email'       => 'Dit is een ongeldig email adres.',
+			'password.required' => 'Voer je wachtwoord in.',
+		];
+	}
+
 	/**
 	 * Attempt to authenticate the request's credentials.
 	 *
@@ -33,7 +42,8 @@ class LoginForm extends Form
 
 		$user = User::query()->where('email', $this->email)->first();
 
-		if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
+		if ( ! Auth::attempt($this->only(['email', 'password']), $this->remember))
+		{
 			RateLimiter::hit($this->throttleKey());
 
 			throw ValidationException::withMessages([
@@ -53,7 +63,8 @@ class LoginForm extends Form
 	 */
 	protected function ensureIsNotRateLimited(): void
 	{
-		if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+		if ( ! RateLimiter::tooManyAttempts($this->throttleKey(), 5))
+		{
 			return;
 		}
 
@@ -74,6 +85,6 @@ class LoginForm extends Form
 	 */
 	protected function throttleKey(): string
 	{
-		return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+		return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
 	}
 }
