@@ -107,7 +107,7 @@ new class extends Component {
 	</div>
 	<div class="pl-6 pr-6">
 		@if(!$items)
-			<p class="text-white text-center mb-8">
+			<p class="text-white text-center mb-8 pb-8">
 				Voeg tickets toe aan je bestelling, dan tonen we hier de totaal kosten! Ben je klaar met je bestelling dan kan je gemakkelijk
 				betalen met IDEAL!
 			</p>
