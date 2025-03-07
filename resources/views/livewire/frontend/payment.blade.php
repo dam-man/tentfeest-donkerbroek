@@ -6,19 +6,6 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.frontend')] class extends Component {
 
-	public LoginForm $form;
-
-	public function login(): void
-	{
-		$this->validate();
-
-		$this->form->authenticate();
-
-		Session::regenerate();
-
-		$this->redirectIntended(default: route('administrator.orders.index'), navigate: true);
-	}
-
 };
 
 ?>
@@ -74,24 +61,7 @@ new #[Layout('layouts.frontend')] class extends Component {
 
 						<div x-show="!register" class="space-y-4">
 
-							<flux:input label="Email" type="email" class="frontend"/>
-
-							<flux:field>
-
-								<div class="mb-3 flex justify-between">
-									<flux:label>Password</flux:label>
-									<flux:link href="#" variant="subtle" class="text-xs pt-1">Wachtwoord Vergeten?</flux:link>
-								</div>
-
-								<flux:input type="password" class="frontend"/>
-								<flux:error name="password"/>
-							</flux:field>
-
-							<div class="mt-6">
-								<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-									INLOGGEN
-								</flux:button>
-							</div>
+							<livewire:components.frontend.login/>
 
 						</div>
 

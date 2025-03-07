@@ -9,8 +9,9 @@ new class extends Component {
 
 	use HasShoppingCartSession;
 
-	public string $page = 'shoppingcart';
-	public string $coupon = '';
+	public string $page       = 'shoppingcart';
+	public string $coupon     = '';
+	public bool   $isLoggedIn = false;
 
 	public function removeFromCart($id): void
 	{
@@ -83,6 +84,11 @@ new class extends Component {
 	#[On('updateShoppingCart')]
 	public function with(): array
 	{
+		if (Auth::check())
+		{
+			$this->isLoggedIn = true;
+		}
+
 		return [
 			'items'       => $this->getCartItems(),
 			'total'       => $this->cartTotal(),
@@ -98,7 +104,7 @@ new class extends Component {
 	<div class="p-6 text-center">
 		<h3 class="text-3xl">
 			<div class="text-pink font-bold  uppercase">
-				 {{$page == 'shoppingcart' ? 'Winkelwagen' : 'Betalen'}}
+				{{$page == 'shoppingcart' ? 'Winkelwagen' : 'Betalen'}}
 			</div>
 			<div class="uppercase text-white  text-lg">
 				<strong>{{$page == 'shoppingcart' ? 'Jouw bestelling' : 'Betaal  eenvoudig Met IDEAL'}}</strong>
@@ -167,12 +173,30 @@ new class extends Component {
 
 			<flux:input wire:model="coupon" placeholder="Voer kortingscode in.." class="mt-8"/>
 
-			<flux:button wire:click="applyCoupon" variant="primary" class="!bg-pink w-full mt-4">
+			<flux:button wire:click="applyCoupon" variant="primary" class="!bg-pink w-full mt-4 uppercase">
 				Korting Toepassen
 			</flux:button>
-			<flux:button href="{{route('payment')}}" type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8">
-				AFREKENEN
-			</flux:button>
+			@if($page === 'shoppingcart')
+				@if($isLoggedIn)
+					<flux:button type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+						IDEAL Betaling Voltooien
+					</flux:button>
+				@else
+					<flux:button href="{{route('payment')}}" type="submit" variant="primary" class="!bg-green-700 uppercase text-white w-full mt-8 mb-8">
+						Ik wil afrekenen
+					</flux:button>
+				@endif
+			@else
+				@if($isLoggedIn)
+					<flux:button type="submit" variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+						IDEAL Betaling Voltooien
+					</flux:button>
+				@else
+					<flux:button type="submit" disabled variant="primary" class="!bg-green-700 text-white w-full mt-8 mb-8 uppercase">
+						IDEAL Betaling Voltooien
+					</flux:button>
+				@endif
+			@endif
 
 		@endif
 	</div>
