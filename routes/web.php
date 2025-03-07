@@ -7,7 +7,6 @@ use Livewire\Volt\Volt;
 
 Route::get('scan/tickets/{id}', [ScanController::class, 'ticket'])->name('scan.tickets');
 Route::get('scan/munten/{id}', [ScanController::class, 'munten'])->name('scan.vouchers');
-Route::post('mollie/webhook', [PaymentController::class, 'webhook'])->name('mollie.webhook');
 Route::get('betaling/{token}/voltooid', [PaymentController::class, 'completed'])->name('payment.completed');
 
 Volt::route('/', 'frontend.home')->name('home');

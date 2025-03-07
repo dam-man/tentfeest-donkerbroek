@@ -26,89 +26,90 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class PaymentController extends Controller
 {
-    use HasShoppingCartSession, HasOrder;
+	use HasShoppingCartSession, HasOrder;
 
-    /**
-     * @throws ApiException
-     */
-    public function webhook(Request $request)
-    {
-        if ( ! $request->has('id'))
-        {
-            die();
-        }
+	/**
+	 * @throws ApiException
+	 */
+	public function webhook(Request $request)
+	{
+		if ( ! $request->has('id'))
+		{
+			die();
+		}
 
-        // Get the status from mollie
-        $transaction = (new MolliePaymentService)->getTransaction($request->id);
+		// Get the status from mollie
+		$transaction = (new MolliePaymentService)->getTransaction($request->id);
 
-        // Update payment with new status
-        $payment = Payment::where('payment_id', $request->id)->first();
+		// Getting the database stuff.
+		$payment = Payment::where('payment_id', $request->id)->first();
+		$order   = Order::where('payment_id', $request->id)->first();
 
-        $payment->status = $transaction->status;
-        $payment->save();
+		// Checking information from tables.
+		if (empty($payment) || empty($order))
+			die('Failure');
 
-        // Update order with new status
-        $order = Order::where('payment_id', $request->id)->first();
+		// Update payment
+		$payment->status   = $transaction->status;
+		$order->updated_at = now();
+		$payment->save();
 
-        $order->status = $transaction->status;
-        $order->save();
+		// Updating the order.
+		$order->status     = $transaction->status;
+		$order->updated_at = now();
+		$order->save();
 
-        $toBePaid = number_format($payment->amount / 100, 2, '', '');
-        $isPaid   = number_format($transaction->amount->value, 2, '', '');
+		// Checking if the payment is paid.
+		$toBePaid = number_format($payment->amount / 100, 2, '', '');
+		$isPaid   = number_format($transaction->amount->value, 2, '', '');
 
-        if ($transaction->status === 'paid' && $toBePaid == $isPaid)
-        {
-            //SendTicketsJob::dispatch($order->id);
+		if ($transaction->status === 'paid' && $toBePaid == $isPaid)
+		{
+			//SendTicketsJob::dispatch($order->id);
 
-            // Update tickets sales
-            //$this->updateEventSoldTotals($order->id);
+			// Update tickets sales
+			$this->updateEventSoldTotals($order->id);
 
-            // Sending Slack notification.
-            if(App::isProduction())
-            {
-                //SendPaymentNotificationJob::dispatch($order->id);
-            }
+			if ($order->coupon_id)
+			{
+				Coupon::whereId($order->coupon_id)->increment('usage');
+			}
+		}
 
-            if ($order->coupon_id)
-            {
-                Coupon::whereId($order->coupon_id)->increment('usage');
-            }
-        }
+		return true;
+	}
 
-        return true;
-    }
+	public function updateEventSoldTotals($orderId): void
+	{
+		$tickets = EventOrder::whereOrderId($orderId)->get();
 
-    public function updateEventSoldTotals($orderId): void
-    {
-        $tickets = EventOrder::whereOrderId($orderId)->get();
+		foreach ($tickets as $ticket)
+		{
+			$event = Event::whereId($ticket->event_id)->first();
 
-        foreach ($tickets as $ticket)
-        {
-            $event = Event::whereId($ticket->event_id)->first();
+			$event->sold = $event->sold + $ticket->quantity;
+			$event->save();
+		}
+	}
 
-            $event->sold = $event->sold + $ticket->quantity;
-            $event->save();
-        }
-    }
+	public function completed($token)
+	{
+		$this->clearCart();
 
-    public function completed($token)
-    {
-        $this->clearCart();
-
-        $payment = Payment::query()
-                          ->with('order')
-                          ->whereRelation('order', 'user_id', Auth::id())
-                          ->where('token', $token)
-                          ->first();
+		$payment = Payment::query()
+		                  ->with('order')
+		                  ->whereRelation('order', 'user_id', Auth::id())
+		                  ->where('token', $token)
+		                  ->first();
 
 		dd($payment);
-        if ( ! $payment)
-        {
-            return view('payment.failed');
-        }
+		if ( ! $payment)
+		{
+			return view('payment.failed');
+		}
 
-        $whatsapp = 'https://wa.me/31621666730?text=' . urlencode('Ik heb een vraag over de betaling met kenmerk ' . $payment->order_id);
+		$whatsapp = 'https://wa.me/31621666730?text=' . urlencode('Ik heb een vraag over de betaling met kenmerk ' . $payment->order_id);
 
-        return view('payment.completed', compact('payment', 'whatsapp'));
-    }
+		return view('payment.completed', compact('payment', 'whatsapp'));
+	}
 }
