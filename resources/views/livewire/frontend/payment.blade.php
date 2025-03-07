@@ -34,7 +34,7 @@ new #[Layout('layouts.frontend')] class extends Component {
 						</h3>
 					</div>
 
-					<div x-data="{ register: true }" class="space-y-4 p-6 pt-0">
+					<div x-data="{ register: false }" class="space-y-4 p-6 pt-0">
 
 						<flux:tabs variant="segmented" class="w-full">
 							<flux:tab x-on:click="register = ! register" icon="lock-closed" :accent="false">Inloggen</flux:tab>
