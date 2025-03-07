@@ -53,8 +53,6 @@ class PaymentController extends Controller
         $order->status = $transaction->status;
         $order->save();
 
-        info('Payment Status: ' . $transaction->isPaid() . ' - DB Amount: ' . $payment->amount / 100 . ' -  Betaal Amount: ' . $transaction->amount->value);
-
         $toBePaid = number_format($payment->amount / 100, 2, '', '');
         $isPaid   = number_format($transaction->amount->value, 2, '', '');
 
@@ -103,6 +101,7 @@ class PaymentController extends Controller
                           ->where('token', $token)
                           ->first();
 
+		dd($payment);
         if ( ! $payment)
         {
             return view('payment.failed');
