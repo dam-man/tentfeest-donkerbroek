@@ -34,7 +34,7 @@ new #[Layout('layouts.frontend')] class extends Component {
 						</h3>
 					</div>
 
-					<div x-data="{ register: false }" class="space-y-4 p-6 pt-0">
+					<div x-data="{ register: true }" class="space-y-4 p-6 pt-0">
 
 						<flux:tabs variant="segmented" class="w-full">
 							<flux:tab x-on:click="register = ! register" icon="lock-closed" :accent="false">Inloggen</flux:tab>
@@ -43,26 +43,12 @@ new #[Layout('layouts.frontend')] class extends Component {
 
 						<!-- Show Register Form -->
 						<div x-show="register">
-
-							<div class="space-y-4">
-								<flux:input label="Naam" type="name" class="frontend"/>
-								<flux:input label="Email" type="email" class="frontend"/>
-								<flux:input label="Wachtwoord" type="email" class="frontend"/>
-								<flux:input label="Herhaal Wachtwoord" type="email" class="frontend"/>
-							</div>
-
-							<div class="mt-4">
-								<flux:button variant="primary" class="!bg-green-700 text-white w-full h-12">
-									REGISTREER GRATIS ACCOUNT
-								</flux:button>
-							</div>
-
+							<livewire:components.frontend.auth.register/>
 						</div>
 
+						<!-- Show Login Form -->
 						<div x-show="!register" class="space-y-4">
-
-							<livewire:components.frontend.login/>
-
+							<livewire:components.frontend.auth.login/>
 						</div>
 
 					</div>
