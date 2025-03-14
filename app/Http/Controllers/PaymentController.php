@@ -50,8 +50,10 @@ class PaymentController extends Controller
 			die('Failure');
 
 		// Checking information from tables.
-		if ($payment->status === 'paid')
-			die('Processed Before');
+		if ($payment->status === 'paid' && !$order->completed)
+		{
+			die('Payment Processed Before - Order not completed');
+		}
 
 		// Update payment
 		$payment->status   = $transaction->status;
