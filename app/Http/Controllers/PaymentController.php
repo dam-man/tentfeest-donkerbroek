@@ -49,7 +49,6 @@ class PaymentController extends Controller
 		if (empty($payment) || empty($order))
 			die('Failure');
 
-		exit('JO');
 		// Update payment
 		$payment->status   = $transaction->status;
 		$order->updated_at = now();
@@ -67,6 +66,7 @@ class PaymentController extends Controller
 		if ($transaction->status === 'paid' && $toBePaid == $isPaid)
 		{
 			//SendTicketsJob::dispatch($order->id);
+			exit('Amount is the same, please process');
 
 			// Update tickets sales
 			$this->updateEventSoldTotals($order->id);
