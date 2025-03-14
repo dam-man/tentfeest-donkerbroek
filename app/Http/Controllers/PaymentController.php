@@ -49,6 +49,7 @@ class PaymentController extends Controller
 		if (empty($payment) || empty($order))
 			die('Failure');
 
+		exit('JO');
 		// Update payment
 		$payment->status   = $transaction->status;
 		$order->updated_at = now();
