@@ -49,6 +49,10 @@ class PaymentController extends Controller
 		if (empty($payment) || empty($order))
 			die('Failure');
 
+		// Checking information from tables.
+		if ($payment->status === 'paid')
+			die('Processed Before');
+
 		// Update payment
 		$payment->status   = $transaction->status;
 		$order->updated_at = now();
