@@ -36,7 +36,7 @@ class LoginForm extends Form
 	 *
 	 * @throws \Illuminate\Validation\ValidationException
 	 */
-	public function authenticate(): void
+	public function authenticate(): true
 	{
 		$this->ensureIsNotRateLimited();
 
@@ -55,6 +55,8 @@ class LoginForm extends Form
 		$user->save();
 
 		RateLimiter::clear($this->throttleKey());
+
+		return true;
 	}
 
 	/**

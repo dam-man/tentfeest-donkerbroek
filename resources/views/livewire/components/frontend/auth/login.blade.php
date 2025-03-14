@@ -11,11 +11,18 @@ new class extends Component {
     {
         $this->validate();
 
-        $this->form->authenticate();
+        if($this->form->authenticate())
+        {
+            Flux::toast(
+                    text: 'Welkom terug ' . auth()->user()->name,
+                    heading: 'Succes',
+                    variant: 'success',
+            );
 
-        Session::regenerate();
+            Session::regenerate();
 
-        $this->redirect(route('payment'), navigate: true);
+            $this->redirect(route('payment'), navigate: true);
+		}
     }
 
 }; ?>
