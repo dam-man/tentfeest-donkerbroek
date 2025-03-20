@@ -361,7 +361,7 @@ namespace App\Models{
  * @property int|null $order_id
  * @property string|null $iban
  * @property int $amount
- * @property mixed $status
+ * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Order|null $order
