@@ -13,6 +13,7 @@ Volt::route('/', 'frontend.home')->name('home');
 Volt::route('/nieuws', 'frontend.news')->name('news');
 Volt::route('/bestellen', 'frontend.order')->name('order');
 Volt::route('/login-of-registreren', 'frontend.payment')->name('payment');
+Volt::route('/betaling/{token}', 'frontend.payment-return')->name('payment.return');
 Volt::route('/betalen', 'frontend.payment')->name('payment');
 
 Route::get('/login', function () {
