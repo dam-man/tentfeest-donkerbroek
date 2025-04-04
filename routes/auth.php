@@ -2,8 +2,6 @@
 
 use Livewire\Volt\Volt;
 
-
-
 Route::middleware(['auth', 'admin'])->group(function () {
 
 	Volt::route('administrator/403', 'administrator.globals.403')->name('administrator.unauthenticated');

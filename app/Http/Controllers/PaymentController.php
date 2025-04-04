@@ -2,27 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GenerateTicketsJob;
-use App\Jobs\SendPaymentNotificationJob;
-use App\Jobs\SendTicketsJob;
 use App\Models\Coupon;
 use App\Models\Event;
 use App\Models\EventOrder;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Models\User;
-use App\Notifications\SendTicketsNotification;
 use App\Service\MolliePaymentService;
-use App\Services\MollieService;
-use App\Services\PdfService;
+use App\Service\PdfService;
 use App\Traits\HasOrder;
 use App\Traits\HasShoppingCartSession;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Mollie\Api\Exceptions\ApiException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class PaymentController extends Controller
 {
@@ -30,6 +21,7 @@ class PaymentController extends Controller
 
 	/**
 	 * @throws ApiException
+	 * @throws \Exception
 	 */
 	public function webhook(Request $request)
 	{
@@ -72,8 +64,7 @@ class PaymentController extends Controller
 
 		if ($transaction->status === 'paid' && $toBePaid == $isPaid)
 		{
-			//SendTicketsJob::dispatch($order->id);
-			exit('Amount is the same, please process');
+			(new PdfService())->generate($order->id);
 
 			// Update tickets sales
 			$this->updateEventSoldTotals($order->id);
@@ -82,6 +73,8 @@ class PaymentController extends Controller
 			{
 				Coupon::whereId($order->coupon_id)->increment('usage');
 			}
+
+			//SendTicketsJob::dispatch($order->id);
 		}
 
 		return true;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\SendPasswordResetNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,10 +35,10 @@ class User extends Authenticatable
         ];
     }
 
-//    public function orders()
-//    {
-//        return $this->hasMany(Order::class,);
-//    }
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new SendPasswordResetNotification($token));
+	}
 
     public function isAdmin(): bool
     {
